@@ -18,11 +18,14 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routes
+
 app.use('/api/auth', authRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/users', userRoutes);
-
+app.get('/', (req, res) => {
+    return res.redirect('/api/docs');
+})
 // Swagger Documentation Route
 app.use('/api/docs', swaggerUi.serve, setup(swaggerSpec));
 
