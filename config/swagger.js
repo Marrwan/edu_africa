@@ -13,6 +13,10 @@ const swaggerDefinition = {
             url: 'http://localhost:4000',
             description: 'Local server',
         },
+        {
+            url: 'https://edu-africa.onrender.com',
+            description: 'Production server',
+        }
     ],
     components: {
         securitySchemes: {
@@ -22,12 +26,24 @@ const swaggerDefinition = {
                 bearerFormat: 'JWT',
             },
         },
-    },
-    security: [
-        {
-            bearerAuth: [],
+        schemas: {
+            Course: {
+                type: 'object',
+                properties: {
+                    title: { type: 'string', description: 'Course title' },
+                    description: { type: 'string', description: 'Course description' },
+                    price: { type: 'number', description: 'Course price' },
+                    category: { type: 'string', description: 'Category ID' },
+                    level: { type: 'string', enum: ['beginner', 'intermediate', 'advanced'] },
+                    language: { type: 'string', description: 'Language of the course' },
+                    syllabus: { type: 'array', items: { type: 'string' } },
+                    imageUrl: { type: 'string', description: 'Image URL' },
+                    resources: { type: 'array', items: { type: 'string' }, description: 'Resources URLs' }
+                },
+            },
         },
-    ],
+    },
+    security: [{ bearerAuth: [] }],
 };
 
 const options = {

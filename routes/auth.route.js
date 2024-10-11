@@ -2,11 +2,12 @@ const express = require('express');
 const passport = require('passport');
 const authController = require('../controllers/auth.controller.');
 const {authenticateJWT} = require("../middlewares/auth.middleware");
+const validationMiddleware = require("../middlewares/validation.middleware");
+const {signupSchema, loginSchema} = require("../validators/user.validators");
 
 const router = express.Router();
 
 // Signup and login routes
-
 /**
  * @swagger
  * /api/auth/signup:
@@ -36,8 +37,7 @@ const router = express.Router();
  *       400:
  *         description: Validation error
  */
-router.post('/signup', authController.signup);
-
+router.post('/signup', validationMiddleware(signupSchema), authController.signup);
 
 /**
  * @swagger
@@ -65,7 +65,7 @@ router.post('/signup', authController.signup);
  *       401:
  *         description: Invalid credentials
  */
-router.post('/login', authController.login);
+router.post('/login', validationMiddleware(loginSchema), authController.login);
 
 // Google OAuth routes
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));

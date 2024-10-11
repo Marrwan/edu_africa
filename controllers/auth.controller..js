@@ -3,9 +3,7 @@ const jwtUtils = require('../utils/jtw.utils');
 
 exports.signup = async (req, res) => {
     try {
-        console.log("HERE")
         const user = await authService.signup(req.body);
-        console.log("user", JSON.stringify(user));
         const token = jwtUtils.generateToken(user);
         res.status(201).json({ message: 'User registered successfully', token, user });
     } catch (error) {
