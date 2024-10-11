@@ -1,6 +1,6 @@
 // config/swagger.js
 const swaggerJSDoc = require('swagger-jsdoc');
-const {PORT} = require("./config");
+const { PORT } = require('./config');
 
 const swaggerDefinition = {
     openapi: '3.0.0',
@@ -8,10 +8,15 @@ const swaggerDefinition = {
         title: 'API Documentation',
         version: '1.0.0',
         description: 'Documentation for the Node.js API using Swagger',
+        contact: {
+            name: 'Abdulbasit Damilola Alabi',
+            email: 'abdulbasitdamilola6@gmail.com',
+            url: 'https://github.com/marrwan',
+        },
     },
     servers: [
         {
-            url: 'http://localhost:3000',
+            url: `http://localhost:${PORT}`,
             description: 'Local server',
         },
     ],
@@ -88,10 +93,9 @@ const swaggerDefinition = {
     security: [{ bearerAuth: [] }],
 };
 
-
 const options = {
     swaggerDefinition,
-    apis: ['./routes/*.js'], // Path to the API docs in the routes directory
+    apis: ['./routes/*.js'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
