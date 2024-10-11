@@ -1,0 +1,284 @@
+{
+  "info": {
+    "name": "My API",
+    "description": "API documentation for my application",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "url": "{{baseUrl}}/api/auth/signup",
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"User Name\", \"email\": \"user@example.com\", \"password\": \"yourpassword\"}"
+            },
+            "header": []
+          },
+          "response": [
+            {
+              "status": "201",
+              "body": "{\"message\": \"User registered successfully\", \"token\": \"your_jwt_token\", \"user\": {\"name\": \"User Name\", \"email\": \"user@example.com\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "url": "{{baseUrl}}/api/auth/login",
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"user@example.com\", \"password\": \"yourpassword\"}"
+            },
+            "header": []
+          },
+          "response": [
+            {
+              "status": "200",
+              "body": "{\"message\": \"Login successful\", \"token\": \"your_jwt_token\", \"user\": {\"name\": \"User Name\", \"email\": \"user@example.com\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Google Login",
+          "request": {
+            "url": "{{baseUrl}}/api/auth/google",
+            "method": "GET",
+            "header": []
+          }
+        },
+        {
+          "name": "Google Login Callback",
+          "request": {
+            "url": "{{baseUrl}}/api/auth/google/callback",
+            "method": "GET",
+            "header": []
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "url": "{{baseUrl}}/api/auth/logout",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          },
+          "response": [
+            {
+              "status": "200",
+              "body": "{\"message\": \"User logged out successfully\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Chat",
+      "item": [
+        {
+          "name": "Get Chats",
+          "request": {
+            "url": "{{baseUrl}}/api/chat/:recipientId",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Send Message",
+          "request": {
+            "url": "{{baseUrl}}/api/chat/:recipientId",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"message\": \"Hello there!\"}"
+            }
+          },
+          "response": [
+            {
+              "status": "201",
+              "body": "{\"message\": \"Message sent successfully\", \"chat\": {\"sender\": \"user_id\", \"recipient\": \"recipient_id\", \"message\": \"Hello there!\", \"timestamp\": \"2023-10-10T12:00:00Z\"}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Courses",
+      "item": [
+        {
+          "name": "Create Course",
+          "request": {
+            "url": "{{baseUrl}}/api/courses",
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"Course Title\", \"description\": \"Course Description\", \"price\": 99.99, \"category\": \"category_id\", \"instructor\": \"instructor_id\", \"level\": \"beginner\", \"language\": \"English\", \"syllabus\": [\"Module 1\", \"Module 2\"]}"
+            }
+          },
+          "response": [
+            {
+              "status": "201",
+              "body": "{\"message\": \"Course created successfully\", \"course\": {\"id\": \"course_id\", \"title\": \"Course Title\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Courses",
+          "request": {
+            "url": "{{baseUrl}}/api/courses",
+            "method": "GET"
+          },
+          "response": [
+            {
+              "status": "200",
+              "body": "[{\"id\": \"course_id\", \"title\": \"Course Title\"}]"
+            }
+          ]
+        },
+        {
+          "name": "Get Course By ID",
+          "request": {
+            "url": "{{baseUrl}}/api/courses/:id",
+            "method": "GET"
+          },
+          "response": [
+            {
+              "status": "200",
+              "body": "{\"id\": \"course_id\", \"title\": \"Course Title\"}"
+            }
+          ]
+        },
+        {
+          "name": "Update Course",
+          "request": {
+            "url": "{{baseUrl}}/api/courses/:id",
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"Updated Course Title\"}"
+            }
+          },
+          "response": [
+            {
+              "status": "200",
+              "body": "{\"message\": \"Course updated successfully\", \"course\": {\"id\": \"course_id\", \"title\": \"Updated Course Title\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Course",
+          "request": {
+            "url": "{{baseUrl}}/api/courses/:id",
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "status": "200",
+              "body": "{\"message\": \"Course deleted successfully\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get User Profile",
+          "request": {
+            "url": "{{baseUrl}}/api/users/profile",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Update User Profile",
+          "request": {
+            "url": "{{baseUrl}}/api/users/profile",
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"New User Name\"}"
+            }
+          },
+          "response": [
+            {
+              "status": "200",
+              "body": "{\"message\": \"Profile updated successfully\", \"user\": {\"name\": \"New User Name\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Enroll in Course",
+          "request": {
+            "url": "{{baseUrl}}/api/users/enroll/:courseId",
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          },
+          "response": [
+            {
+              "status": "200",
+              "body": "{\"message\": \"Enrolled in course successfully\", \"user\": {\"name\": \"User Name\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Get Enrolled Courses",
+          "request": {
+            "url": "{{baseUrl}}/api/users/enrolled-courses",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Get Course Progress",
+          "request": {
+            "url": "{{baseUrl}}/api/users/course-progress/:courseId",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
