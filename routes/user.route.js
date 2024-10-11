@@ -1,6 +1,8 @@
 const express = require('express');
 const userController = require('../controllers/user.controller');
 const { authenticateJWT } = require('../middlewares/auth.middleware');
+const {updateProfileSchema} = require("../validators/user.validators");
+const validationMiddleware = require("../middlewares/validation.middleware");
 
 const router = express.Router();
 
@@ -55,7 +57,7 @@ router.get('/profile', authenticateJWT, userController.getUserProfile);
  *       400:
  *         description: Validation error
  */
-router.put('/profile', authenticateJWT, userController.updateUserProfile);
+router.put('/profile', authenticateJWT, validationMiddleware(updateProfileSchema), userController.updateUserProfile);
 
 /**
  * @swagger
