@@ -12,7 +12,7 @@ const swaggerSpec = require("./config/swagger");
 
 
 const app = express();
-connectDB().then(r => {});
+// connectDB().then(r => {});
 
 app.use(cors());
 app.use(bodyParser.json());
