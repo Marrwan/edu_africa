@@ -11,13 +11,9 @@ const swaggerDefinition = {
     },
     servers: [
         {
-            url: `http://localhost:${PORT}`,
+            url: 'http://localhost:3000',
             description: 'Local server',
         },
-        {
-            url: 'https://edu-africa.onrender.com',
-            description: 'Production server',
-        }
     ],
     components: {
         securitySchemes: {
@@ -28,6 +24,26 @@ const swaggerDefinition = {
             },
         },
         schemas: {
+            User: {
+                type: 'object',
+                properties: {
+                    name: { type: 'string', description: 'Name of the user' },
+                    email: { type: 'string', description: 'User email' },
+                    profilePicture: { type: 'string', description: 'Profile picture URL' },
+                    coursesEnrolled: {
+                        type: 'array',
+                        items: {
+                            type: 'object',
+                            properties: {
+                                course: { $ref: '#/components/schemas/Course' },
+                                progress: { type: 'number', description: 'Progress percentage' },
+                                status: { type: 'string', enum: ['in-progress', 'completed'], description: 'Course status' },
+                            },
+                        },
+                    },
+                    createdAt: { type: 'string', format: 'date-time', description: 'Account creation date' },
+                },
+            },
             Course: {
                 type: 'object',
                 properties: {
@@ -35,17 +51,43 @@ const swaggerDefinition = {
                     description: { type: 'string', description: 'Course description' },
                     price: { type: 'number', description: 'Course price' },
                     category: { type: 'string', description: 'Category ID' },
-                    level: { type: 'string', enum: ['beginner', 'intermediate', 'advanced'] },
+                    level: { type: 'string', enum: ['beginner', 'intermediate', 'advanced'], description: 'Course level' },
                     language: { type: 'string', description: 'Language of the course' },
-                    syllabus: { type: 'array', items: { type: 'string' } },
-                    imageUrl: { type: 'string', description: 'Image URL' },
-                    resources: { type: 'array', items: { type: 'string' }, description: 'Resources URLs' }
+                    syllabus: { type: 'array', items: { type: 'string' }, description: 'Course syllabus' },
+                    imageUrl: { type: 'string', description: 'URL of the course image' },
+                    resources: { type: 'array', items: { type: 'string' }, description: 'Course resources' },
+                    contents: {
+                        type: 'array',
+                        items: {
+                            type: 'object',
+                            properties: {
+                                type: { type: 'string', enum: ['video', 'quiz', 'pdf', 'article'], description: 'Content type' },
+                                title: { type: 'string', description: 'Content title' },
+                                duration: { type: 'number', description: 'Content duration in minutes' },
+                                contentUrl: { type: 'string', description: 'URL for the content' },
+                                additionalResources: { type: 'array', items: { type: 'string' }, description: 'Additional resources' },
+                            },
+                        },
+                    },
+                    faqs: {
+                        type: 'array',
+                        items: {
+                            type: 'object',
+                            properties: {
+                                question: { type: 'string', description: 'FAQ question' },
+                                answer: { type: 'string', description: 'FAQ answer' },
+                            },
+                        },
+                    },
+                    enrollCount: { type: 'number', description: 'Number of students enrolled' },
+                    rating: { type: 'number', description: 'Average course rating' },
                 },
             },
         },
     },
     security: [{ bearerAuth: [] }],
 };
+
 
 const options = {
     swaggerDefinition,
