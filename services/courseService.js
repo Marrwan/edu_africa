@@ -1,14 +1,32 @@
 const Course = require('../models/course.model');
 const Category = require('../models/category.model');
 
-exports.createCourse = async (courseData) => {
-    const categoryExists = await Category.findById(courseData.category);
+exports.createCourse = async (courseData, instructorId) => {
+    const { title, description, price, category, level, language, syllabus, imageUrl, resources, contents = [], faqs = [] } = courseData;
+
+    const categoryExists = await Category.findById(category);
     if (!categoryExists) {
         throw new Error('Category not found');
     }
-    const course = new Course(courseData);
+
+    const course = new Course({
+        title,
+        description,
+        price,
+        category,
+        instructor: instructorId,
+        level,
+        language,
+        syllabus,
+        imageUrl,
+        resources,
+        contents,
+        faqs
+    });
+
     return await course.save();
 };
+
 
 exports.getAllCourses = async () => {
     return Course.find().populate('category').populate('instructor');

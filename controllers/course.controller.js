@@ -3,10 +3,12 @@ const courseService = require('../services/courseService');
 // Create a new course
 exports.createCourse = async (req, res) => {
     try {
-        const course = await courseService.createCourse(req.body);
-        return res.status(201).json({ message: 'Course created successfully', course });
+        const instructorId = req.user.id;
+
+        const course = await courseService.createCourse(req.body, instructorId);
+        res.status(201).json({ message: 'Course created successfully', course });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 };
 
