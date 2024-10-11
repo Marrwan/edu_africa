@@ -6,6 +6,9 @@ const authRoutes = require('./routes/auth.route');
 const chatRoutes = require('./routes/chat.route');
 const courseRoutes = require('./routes/course.route');
 const userRoutes = require('./routes/user.route');
+const {setup} = require("swagger-ui-express");
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require("./config/swagger");
 
 
 const app = express();
@@ -19,6 +22,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/users', userRoutes);
+
+// Swagger Documentation Route
+app.use('/api/docs', swaggerUi.serve, setup(swaggerSpec));
 
 // Handle 404 errors for unknown routes
 app.use('*', (req, res) => {
