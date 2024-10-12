@@ -3,23 +3,16 @@ const http = require('http');
 const socketIo = require('socket.io');
 
 const app = require('./app');
-const {PORT} = require("./config/config");
+const { PORT } = require("./config/config");
+const {Server} = require("socket.io");
 const server = http.createServer(app);
-const io = socketIo(server);
+// const io = socketIo(server);
 
-// io.on('connection', (socket) => {
-//     console.log('User connected');
-//
-//     socket.on('sendMessage', (data) => {
-//         // Save message to DB and broadcast it
-//         io.emit('receiveMessage', data);
-//     });
-//
-//     socket.on('disconnect', () => {
-//         console.log('User disconnected');
-//     });
-// });
-
+const io = new Server(server, {
+    cors: {
+        origin: "*"
+    }
+});
 
 // Socket.io for real-time messaging
 io.on('connection', (socket) => {
@@ -30,7 +23,10 @@ io.on('connection', (socket) => {
         const { senderId, recipientId, message } = data;
         try {
             const chat = await require('./services/chat.services').sendMessage(senderId, recipientId, message);
-            io.emit('receiveMessage', chat);
+
+            socket.to(recipientId).emit('message', chat);
+
+            socket.emit('message', chat);
         } catch (error) {
             console.error('Error sending message:', error);
         }
@@ -40,7 +36,6 @@ io.on('connection', (socket) => {
         console.log('User disconnected');
     });
 });
-
 
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

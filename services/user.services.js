@@ -45,3 +45,7 @@ exports.getCourseProgress = async (userId, courseId) => {
     }
     return courseProgress;
 };
+
+exports.findAllUsers = async () => {
+    return User.find().select('name email profilePicture');
+}

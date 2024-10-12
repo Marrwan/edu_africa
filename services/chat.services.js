@@ -10,11 +10,14 @@ exports.sendMessage = async (senderId, recipientId, message) => {
     return await chat.save();
 };
 
-exports.getUserChats = async (userId) => {
-    // return await Chat.find({ $or: [{ sender: userId }, { recipient: userId }] }).populate('sender recipient');
-    return Chat.find({$or: [{sender: userId}, {recipient: userId}]}).populate('sender recipient');
+exports.getUserChats = async (senderId, recipientId) => {
+    return Chat.find({
+        $or: [
+            {sender: senderId, recipient: recipientId},
+            {sender: recipientId, recipient: senderId}
+        ]
+    }).populate('sender recipient');
 };
-
 
 // Fetch chat messages between two users
 // exports.getChats = async (userId, recipientId) => {

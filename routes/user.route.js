@@ -127,6 +127,21 @@ router.get('/enrolled-courses', authenticateJWT, userController.getEnrolledCours
  */
 router.get('/course-progress/:courseId', authenticateJWT, userController.getCourseProgress);
 
+/**
+ * @swagger
+ * /api/users/all:
+ *   get:
+ *     summary: Get all users
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Course progress details
+ *       404:
+ *         description: Course progress not found
+ */
+router.get('/all', authenticateJWT, userController.getAllUsers);
 
 
 module.exports = router;

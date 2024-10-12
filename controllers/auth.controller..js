@@ -26,7 +26,7 @@ exports.googleLoginCallback = async (req, res) => {
     try {
         const user = req.user;
         const token = jwtUtils.generateToken(user);
-        res.redirect(`/?token=${token}`); // Redirect to frontend with the JWT token
+        res.redirect(`/?token=${token}`);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

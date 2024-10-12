@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth.route');
 const chatRoutes = require('./routes/chat.route');
 const courseRoutes = require('./routes/course.route');
 const userRoutes = require('./routes/user.route');
+const categoryRoutes = require('./routes/category.route');
 const {setup} = require("swagger-ui-express");
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require("./config/swagger");
@@ -13,7 +14,7 @@ const {dump} = require("js-yaml");
 
 
 const app = express();
-connectDB().then(r => {});
+// connectDB().then(r => {});
 
 // app.use(cors());
 const corsOptions = {
@@ -31,6 +32,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/categories', categoryRoutes )
 app.get('/', (req, res) => {
     return res.redirect('/api/docs');
 })
