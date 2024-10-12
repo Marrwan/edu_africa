@@ -13,9 +13,9 @@ const {dump} = require("js-yaml");
 
 
 const app = express();
-// connectDB().then(r => {});
+connectDB().then(r => {});
 
-app.use(cors());
+// app.use(cors());
 const corsOptions = {
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',

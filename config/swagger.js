@@ -88,6 +88,15 @@ const swaggerDefinition = {
                     rating: { type: 'number', description: 'Average course rating' },
                 },
             },
+            Chat: {
+                    type: 'object',
+                    properties: {
+                        sender: { type: 'string', description: 'Sender user ID' },
+                        recipient: { type: 'string', description: 'Recipient user ID' },
+                        message: { type: 'string', description: 'Chat message' },
+                        timestamp: { type: 'string', format: 'date-time', description: 'Message timestamp' },
+                    },
+            },
         },
     },
     security: [{ bearerAuth: [] }],
